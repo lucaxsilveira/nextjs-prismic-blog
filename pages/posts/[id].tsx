@@ -1,16 +1,10 @@
 import React from 'react';
 import { GetStaticPropsContext } from 'next';
-import { RichText, RichTextBlock } from 'prismic-reactjs';
+import { RichText } from 'prismic-reactjs';
 import { fetchAPI } from '../../lib/api-prismic';
 
 interface PostProps {
-  post: {
-    title: string;
-    thumbnail: {
-      url: string;
-    };
-    content: RichTextBlock[];
-  }
+  post: IPost
 }
 
 function Post({ post }: PostProps) {
@@ -18,10 +12,9 @@ function Post({ post }: PostProps) {
 
   return (
     <div>
-      <h1>{post.title}</h1>
+      <h1>{RichText.render(post.title)}</h1>
       <img width="200" src={post.thumbnail.url} alt="" />
-
-      {RichText.asText(post.content)}
+      {RichText.render(post.content)}
     </div>
   );
 }

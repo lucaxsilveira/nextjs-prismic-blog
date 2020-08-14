@@ -1,25 +1,13 @@
 import Head from 'next/head'
 import {Container, TitleContainer} from '../styles/Home'
-import {RocketLogo} from '../assets/images/logo'
-import Link from 'next/link'
 
+import Link from 'next/link'
+import { RichText } from 'prismic-reactjs';
 import { fetchAPI } from '../lib/api-prismic';
 
-interface Post {
-  node: {
-    _meta: {
-      uid: string;
-    }
-    title: string;
-    thumbnail: {
-      url: string;
-    };
-    content: string;
-  }
-}
 
 interface HomeProps {
-  posts: Post[];
+  posts: NodePost[];
 }
 
 export default function Home({ posts }: HomeProps) {
@@ -40,7 +28,7 @@ export default function Home({ posts }: HomeProps) {
             <Link href={`posts/${node._meta.uid}`}>
               <a>
                 <img width="100" src={node.thumbnail.url} />
-                {node.title}
+                {RichText.render(node.title)}
               </a>
             </Link>
          </li>
